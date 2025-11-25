@@ -51,7 +51,7 @@ public class ChunderOfTheWild {
         forestShrine = new Room("in the Shrine in the Forest of Spirits");
         bokoblinCamp = new Room("in an Old Bokoblin Camp");
         forest = new Room("in the Forest of Spirits");
-        tent = new Room("Standing infront of a tent");
+        tent = new Room("Standing infront of a tent", oldMan);
         templeOfTime = new Room("in the Temple of Time");
         easternAbbey = new Room("in the Eastern Abbey");
         mountHylia = new Room("Standing on the peak of Mount Hylia");
@@ -111,13 +111,14 @@ public class ChunderOfTheWild {
         }
         else {
             player = new Character("player", shrineOfResurrection);
-            oldMan = new Friend("Duffy");
-            oldMan.setCurrentRoom(tent);
+            oldMan = new Friend("Duffy",tent);
+
             oldMan.friendInventory.addTo(allItems.get("shirt"));
             shrineOfResurrection.roomInventory.addTo(allItems.get("torch"));
             forest.roomInventory.addTo(allItems.get("memory1"));
             bokoblinCamp.roomInventory.addTo(allItems.get("trousers"));
             forestShrine.roomInventory.addTo(allItems.get("shoes"));
+            tent.setCharacters(oldMan);
            // tent.roomInventory.addTo(allItems.get("shirt"));
             tent.roomInventory.addTo(allItems.get("apple"));
             templeOfTime.roomInventory.addTo(allItems.get("memory2"));
@@ -270,6 +271,9 @@ public class ChunderOfTheWild {
     private void look(Command command){
         if (!command.hasSecondWord()) {
             player.getCurrentRoom().getItems();
+            if (player.getCurrentRoom() == allRooms.get("tent")){
+                player.getCurrentRoom().getFriendCharacters();
+            }
         }
 
     }

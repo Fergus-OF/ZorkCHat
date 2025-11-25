@@ -2,12 +2,16 @@ import java.io.Serializable;
 
 public class Friend extends Character implements Serializable {
     private String friendName;
+    private Room currentRoomFriend;
     public Inventory friendInventory;
-    public Friend(String friendName){
+    public Friend(String friendName,Room room){
         this.friendName = friendName;
         this.friendInventory = new Inventory();
+        this.currentRoomFriend = room;
 
     }
+
+    public String getFriendName(){ return friendName;}
 
     public void friendInventory(){
         friendInventory.showItems();

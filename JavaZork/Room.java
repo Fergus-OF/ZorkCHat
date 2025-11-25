@@ -7,11 +7,19 @@ public class Room implements Serializable {
     private String description;
     private Map<String, Room> exits; // Map direction to neighboring Room
     public Inventory roomInventory;
+    public Inventory characters;
 
     public Room(String description) {
         this.description = description;
         exits = new HashMap<>();
         this.roomInventory = new Inventory();
+    }
+
+    public Room(String description, Character characters){
+        this.description = description;
+        exits = new HashMap<>();
+        this.roomInventory = new Inventory();
+        this.characters = new Inventory();
     }
 
     public String getDescription() {
@@ -27,6 +35,10 @@ public class Room implements Serializable {
     }
 
     public ArrayList getInventory(){ return roomInventory.getInventories(); }
+
+    public void setCharacters(Friend fella){characters.setCharacter(fella);}
+
+    public void getFriendCharacters(){ characters.getFriendCharacter() ; }
 
     public void getItems(){  roomInventory.showItems();}
 

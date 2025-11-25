@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Inventory implements Serializable {
     ArrayList<Item> inventory = new ArrayList<>();
+    ArrayList<Friend> characters = new ArrayList<>();
 
     public Inventory(){
 
@@ -11,6 +12,16 @@ public class Inventory implements Serializable {
 
     public ArrayList getInventories(){
         return inventory;
+    }
+
+    public void setCharacter(Friend characterSetting){
+        characters.add(characterSetting);
+    }
+
+    public void getFriendCharacter() {
+        for (Friend chats: characters) {
+          System.out.println(chats.getFriendName());
+        }
     }
 
     public void showItems(){
