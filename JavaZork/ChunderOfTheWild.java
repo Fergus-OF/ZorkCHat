@@ -25,6 +25,7 @@ public class ChunderOfTheWild {
     private HashMap<String, Item> allItems = new HashMap<>();
     File file = new File("player.ser");
     private Friend oldMan;
+    private Foe wolf;
 
     public void savePlayer() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("player.ser"))) {
@@ -50,7 +51,7 @@ public class ChunderOfTheWild {
         outsideShrineOfResurrection = new Room("Outside the Shrine of Resurrection");
         forestShrine = new Room("in the Shrine in the Forest of Spirits");
         bokoblinCamp = new Room("in an Old Bokoblin Camp");
-        forest = new Room("in the Forest of Spirits");
+        forest = new Room("in the Forest of Spirits", wolf);
         tent = new Room("Standing infront of a tent", oldMan);
         templeOfTime = new Room("in the Temple of Time");
         easternAbbey = new Room("in the Eastern Abbey");
@@ -111,11 +112,13 @@ public class ChunderOfTheWild {
         }
         else {
             player = new Character("player", shrineOfResurrection);
-            oldMan = new Friend("Duffy",tent);
+            oldMan = new Friend("Old Man",tent);
+            wolf = new Foe("Wolf",forest);
 
             oldMan.friendInventory.addTo(allItems.get("shirt"));
             shrineOfResurrection.roomInventory.addTo(allItems.get("torch"));
             forest.roomInventory.addTo(allItems.get("memory1"));
+            forest.setCharacters(wolf);
             bokoblinCamp.roomInventory.addTo(allItems.get("trousers"));
             forestShrine.roomInventory.addTo(allItems.get("shoes"));
             tent.setCharacters(oldMan);
@@ -221,6 +224,8 @@ public class ChunderOfTheWild {
             case ("save"):
                 savePlayer();
                 break;
+            case("talkto"):
+                talkto(command);
             default:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -229,7 +234,7 @@ public class ChunderOfTheWild {
     }
 
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander around the university.");
+        System.out.println("Your head is banging. Your stomach is brewing up a storm. Last night is a blur. \n You need to find your clothes and regain your memories ");
         System.out.print("Your command words are: ");
         parser.showCommands();
     }
@@ -271,9 +276,13 @@ public class ChunderOfTheWild {
     private void look(Command command){
         if (!command.hasSecondWord()) {
             player.getCurrentRoom().getItems();
-            if (player.getCurrentRoom() == allRooms.get("tent")){
+            if ((player.getCurrentRoom() == allRooms.get("tent")) ){
                 player.getCurrentRoom().getFriendCharacters();
             }
+            else if ((player.getCurrentRoom() ==  allRooms.get("forest"))){
+                player.getCurrentRoom().getFoeCharacters();
+            }
+
         }
 
     }
@@ -310,6 +319,10 @@ public class ChunderOfTheWild {
         if (!command.hasSecondWord()){
             player.showInventory();
         }
+    }
+
+    private void talkto(Command command){
+
     }
 
     public static void main(String[] args) {

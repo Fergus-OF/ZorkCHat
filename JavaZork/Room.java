@@ -38,7 +38,11 @@ public class Room implements Serializable {
 
     public void setCharacters(Friend fella){characters.setCharacter(fella);}
 
+    public void setCharacters(Foe enemy){characters.setCharacter(enemy);}
+
     public void getFriendCharacters(){ characters.getFriendCharacter() ; }
+
+    public void getFoeCharacters(){characters.getFoeCharacter();}
 
     public void getItems(){  roomInventory.showItems();}
 
