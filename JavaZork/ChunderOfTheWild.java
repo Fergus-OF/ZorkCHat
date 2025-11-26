@@ -23,9 +23,12 @@ public class ChunderOfTheWild {
     private Character player;
     private HashMap<String,Room> allRooms = new HashMap<>();
     private HashMap<String, Item> allItems = new HashMap<>();
+    private HashMap<String, Friend> allFriends = new HashMap<>();
+    private HashMap<String, Foe> allFoes = new HashMap<>();
     File file = new File("player.ser");
     private Friend oldMan;
     private Foe wolf;
+    private Friend zelda;
 
     public void savePlayer() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("player.ser"))) {
@@ -47,7 +50,7 @@ public class ChunderOfTheWild {
         Room shrineOfResurrection, outsideShrineOfResurrection, forestShrine, bokoblinCamp, forest, tent, templeOfTime, easternAbbey, mountHylia, riverOfTheDead;
 
         // create rooms
-        shrineOfResurrection = new Room("in Shrine of Resurrection");
+        shrineOfResurrection = new Room("in Shrine of Resurrection", zelda);
         outsideShrineOfResurrection = new Room("Outside the Shrine of Resurrection");
         forestShrine = new Room("in the Shrine in the Forest of Spirits");
         bokoblinCamp = new Room("in an Old Bokoblin Camp");
@@ -57,7 +60,6 @@ public class ChunderOfTheWild {
         easternAbbey = new Room("in the Eastern Abbey");
         mountHylia = new Room("Standing on the peak of Mount Hylia");
         riverOfTheDead = new Room("Standing on the frozen surface of The River Of The Dead");
-
 
 
         allRooms.put("shrineOfResurrection",shrineOfResurrection);
@@ -112,11 +114,17 @@ public class ChunderOfTheWild {
         }
         else {
             player = new Character("player", shrineOfResurrection);
-            oldMan = new Friend("Old Man",tent);
-            wolf = new Foe("Wolf",forest);
+            oldMan = new Friend("oldMan",tent);
+            wolf = new Foe("wolf",forest);
+            zelda = new Friend("zelda", shrineOfResurrection);
+
+            allFriends.put("oldMan", oldMan);
+            allFoes.put("wolf", wolf);
+            allFriends.put("zelda",zelda);
 
             oldMan.friendInventory.addTo(allItems.get("shirt"));
             shrineOfResurrection.roomInventory.addTo(allItems.get("torch"));
+            shrineOfResurrection.setCharacters(zelda);
             forest.roomInventory.addTo(allItems.get("memory1"));
             forest.setCharacters(wolf);
             bokoblinCamp.roomInventory.addTo(allItems.get("trousers"));
@@ -226,6 +234,7 @@ public class ChunderOfTheWild {
                 break;
             case("talkto"):
                 talkto(command);
+                break;
             default:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -276,7 +285,7 @@ public class ChunderOfTheWild {
     private void look(Command command){
         if (!command.hasSecondWord()) {
             player.getCurrentRoom().getItems();
-            if ((player.getCurrentRoom() == allRooms.get("tent")) ){
+            if ((player.getCurrentRoom() == allRooms.get("tent")) || (player.getCurrentRoom() == allRooms.get("shrineOfResurrection"))){
                 player.getCurrentRoom().getFriendCharacters();
             }
             else if ((player.getCurrentRoom() ==  allRooms.get("forest"))){
@@ -322,6 +331,18 @@ public class ChunderOfTheWild {
     }
 
     private void talkto(Command command){
+        if (!command.hasSecondWord()) {
+            System.out.println("Talk to who?");
+            return;
+        }
+        String npc = command.getSecondWord();
+        if (player.getCurrentRoom() == allRooms.get("tent")){
+
+            System.out.println(allFriends.get(npc).getFriendName() + ": I have your shirt");
+        }
+        if (player.getCurrentRoom() == allRooms.get("shrineOfResurrection")){
+            System.out.println(allFriends.get(npc).getFriendName()+": You better have a good excuse for what happened last night. Where are your clothes??");
+        }
 
     }
 
