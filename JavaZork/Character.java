@@ -5,6 +5,7 @@ public class Character implements Serializable {
     private Room currentRoom;
     public Inventory playerInventory;
     public Inventory playerPermissions;
+    public int health;
     public Character(){}
 
     public Character(String name, Room startingRoom) {
@@ -14,9 +15,42 @@ public class Character implements Serializable {
         this.playerPermissions = new Inventory();
     }
 
+    public Character(String name, Room startingRoom,int health) {
+        this.name = name;
+        this.currentRoom = startingRoom;
+        this.playerInventory = new Inventory();
+        this.playerPermissions = new Inventory();
+        this.health = health;
+    }
+
     public String getName() {
         return name;
     }
+
+    public void attack(){
+        int attackValue = (int)(Math.random()*20);
+
+    }
+
+    public void setFoeDamage(int damage ) {
+       // Foe.setHealth((damage));
+    }
+    public void reduceHealth(){
+        int attackValue = (int)(Math.random()*20);
+        int newHealth = getHealth()- attackValue;
+        System.out.println("Wolf Health: "+ health);
+        System.out.println("AttackValue: "+ attackValue);
+
+        setHealth(newHealth);
+        System.out.println("New Health" + health);
+    }
+
+    public void setHealth(int newHealth){
+        this.health =  newHealth;
+        //return health;
+    }
+
+    public int getHealth(){ return health; }
 
     public Room getCurrentRoom() {
         return currentRoom;

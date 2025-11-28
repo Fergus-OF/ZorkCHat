@@ -23,6 +23,8 @@ public class Inventory implements Serializable {
         foes.add(characterSetting);
     }
 
+    public void removeCharacter(Foe enemy){ foes.remove(enemy);    }
+
     public void getFriendCharacter() {
         for (Friend chats: friends) {
           System.out.println(chats.getFriendName());

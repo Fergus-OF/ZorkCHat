@@ -17,6 +17,7 @@ emphasizing exploration and simple command-driven gameplay
 //import java.util.Arrays;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class ChunderOfTheWild {
     private Parser parser;
@@ -113,10 +114,11 @@ public class ChunderOfTheWild {
             }
         }
         else {
-            player = new Character("player", shrineOfResurrection);
+            player = new Character("player", shrineOfResurrection,100);
             oldMan = new Friend("oldMan",tent);
-            wolf = new Foe("wolf",forest);
+            wolf = new Foe("wolf",forest, 50);
             zelda = new Friend("zelda", shrineOfResurrection);
+
 
             allFriends.put("oldMan", oldMan);
             allFoes.put("wolf", wolf);
@@ -235,6 +237,9 @@ public class ChunderOfTheWild {
             case("talkto"):
                 talkto(command);
                 break;
+            case("fight"):
+                fight(command);
+                break;
             default:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -327,6 +332,7 @@ public class ChunderOfTheWild {
     private void inventory(Command command){
         if (!command.hasSecondWord()){
             player.showInventory();
+            //System.out.println(player.getHealth());
         }
     }
 
@@ -338,12 +344,70 @@ public class ChunderOfTheWild {
         String npc = command.getSecondWord();
         if (player.getCurrentRoom() == allRooms.get("tent")){
 
-            System.out.println(allFriends.get(npc).getFriendName() + ": I have your shirt");
+            try {
+                System.out.println(allFriends.get(npc).getFriendName() + ": I have your shirt");
+                //System.out.println(allFriends.get(npc).getFriendInventory() );
+            } catch (Exception e) {
+                System.out.print("");
+            }
+
         }
         if (player.getCurrentRoom() == allRooms.get("shrineOfResurrection")){
-            System.out.println(allFriends.get(npc).getFriendName()+": You better have a good excuse for what happened last night. Where are your clothes??");
+            try {
+                System.out.println(allFriends.get(npc).getFriendName()+": You better have a good excuse for what happened last night. Where are your clothes??");
+            } catch (Exception e) {
+                System.out.print("");
+            }
+        }
+        else{
+            System.out.println("Please check Spelling or that there is an NPC in your current room.");
+            return;
         }
 
+    }
+
+    private void fight(Command command){
+        if (!command.hasSecondWord()){
+          System.out.println("Fight what?");
+          return;
+        }
+        if (allFoes.containsKey(command.getSecondWord())) {
+            if (player.getCurrentRoom() == allRooms.get("forest")) {
+                Scanner input = new Scanner(System.in);
+                while ((player.getHealth() > 0) && (allFoes.get(command.getSecondWord()).getHealth() > 0)) {
+                    System.out.println("Player Health: " + player.getHealth());
+                    System.out.println("Wolf Health: " + allFoes.get(command.getSecondWord()).getHealth());
+                    System.out.println("What would you like to do?: \nAttack[1] \nEat[2] \nRun Away[3]\n");
+                    int fightChoice = 0;
+                    try {
+                        fightChoice = input.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Please enter a valid number.");
+                        continue;
+                    }
+                    switch (fightChoice) {
+                        case (1):
+                            allFoes.get(command.getSecondWord()).reduceHealth();
+                            if (allFoes.get(command.getSecondWord()).getHealth() < 0) {
+                                player.getCurrentRoom().removeCharacter(allFoes.get(command.getSecondWord()));
+                            }
+                            break;
+                        case (2):
+                            break;
+                        case (3):
+                            System.out.println("You successfully ran away from the Wolf");
+                            break;
+                        default:
+                            System.out.println("Something went wrong, please try again");
+                            continue;
+                    }
+                }
+
+            }
+        }
+        else {
+
+        }
     }
 
     public static void main(String[] args) {

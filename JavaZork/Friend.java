@@ -13,7 +13,8 @@ public class Friend extends Character implements Serializable {
 
     public String getFriendName(){ return friendName;}
 
-    public void friendInventory(){
+
+    public void getFriendInventory(){
         friendInventory.showItems();
     }
 
@@ -24,4 +25,6 @@ public class Friend extends Character implements Serializable {
     public void friendRemoveItem(Item item){
         friendInventory.removeFrom(item);
     }
+
+
 }
