@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+/*
 public class Parser {
     private CommandWords commands;
     private Scanner reader;
@@ -35,3 +35,27 @@ public class Parser {
         commands.showAll();
     }
 }
+*/
+
+
+public class Parser {
+    private CommandWords commands = new CommandWords();
+
+    public Command getCommand() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("> ");
+        String input = sc.nextLine().toLowerCase();
+
+        String[] words = input.split("\\s+");
+
+        String word1 = words.length > 0 ? words[0] : null;
+        String word2 = words.length > 1 ? words[1] : null;
+        Commands type = commands.getCommands(word1);
+        return new Command(type, word2);
+    }
+
+    public void showCommands() {
+        commands.showAll();
+    }
+}
+

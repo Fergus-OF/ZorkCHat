@@ -31,15 +31,17 @@ public class Inventory implements Serializable {
         }
     }
 
-    public void getFoeCharacter(){
+    public ArrayList getFoeCharacter(){return foes; }
+    public void showFoeCharacter(){
         for (Foe chats : foes){
             System.out.println(chats.getFoeName());
         }
     }
 
     public void showItems(){
-        for(Item item: inventory)
-            System.out.println(item.getName());
+        for(Item item: inventory) {
+            System.out.println("A " +item.getName() + " " + item.getDescription());
+        }
     }
 
     public void addTo(Item item){

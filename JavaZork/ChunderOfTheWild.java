@@ -22,19 +22,19 @@ import java.util.Scanner;
 public class ChunderOfTheWild {
     private Parser parser;
     private Character player;
-    private HashMap<String,Room> allRooms = new HashMap<>();
+    private HashMap<String, Room> allRooms = new HashMap<>();
     private HashMap<String, Item> allItems = new HashMap<>();
     private HashMap<String, Friend> allFriends = new HashMap<>();
     private HashMap<String, Foe> allFoes = new HashMap<>();
-    File file = new File("player.ser");
+    File file = new File("game.ser");
     private Friend oldMan;
     private Foe wolf;
     private Friend zelda;
 
     public void savePlayer() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("player.ser"))) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("game.ser"))) {
             out.writeObject(player);
-            System.out.println("Object has been serialized to person.ser");
+            System.out.println("Object has been serialized to game.ser");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,16 +63,16 @@ public class ChunderOfTheWild {
         riverOfTheDead = new Room("Standing on the frozen surface of The River Of The Dead");
 
 
-        allRooms.put("shrineOfResurrection",shrineOfResurrection);
-        allRooms.put("outside",outsideShrineOfResurrection);
-        allRooms.put("forestShrine",forestShrine);
-        allRooms.put("bokoblinCamp",bokoblinCamp);
-        allRooms.put("forest",forest);
-        allRooms.put("tent",tent);
-        allRooms.put("templeOfTime",templeOfTime);
-        allRooms.put("easternAbbey",easternAbbey);
-        allRooms.put("mountHylia",mountHylia);
-        allRooms.put("riverOfTheDead",riverOfTheDead);
+        allRooms.put("shrineOfResurrection", shrineOfResurrection);
+        allRooms.put("outside", outsideShrineOfResurrection);
+        allRooms.put("forestShrine", forestShrine);
+        allRooms.put("bokoblinCamp", bokoblinCamp);
+        allRooms.put("forest", forest);
+        allRooms.put("tent", tent);
+        allRooms.put("templeOfTime", templeOfTime);
+        allRooms.put("easternAbbey", easternAbbey);
+        allRooms.put("mountHylia", mountHylia);
+        allRooms.put("riverOfTheDead", riverOfTheDead);
 
         // initialise room exits
         shrineOfResurrection.setExit("north", outsideShrineOfResurrection);
@@ -81,58 +81,62 @@ public class ChunderOfTheWild {
         outsideShrineOfResurrection.setExit("east", tent);
         outsideShrineOfResurrection.setExit("south", shrineOfResurrection);
 
-        forest.setExit("east",outsideShrineOfResurrection);
-        forest.setExit("north",bokoblinCamp);
-        forest.setExit("west",forestShrine);
+        forest.setExit("east", outsideShrineOfResurrection);
+        forest.setExit("north", bokoblinCamp);
+        forest.setExit("west", forestShrine);
 
-        bokoblinCamp.setExit("south",forest);
+        bokoblinCamp.setExit("south", forest);
 
-        forestShrine.setExit("east",forest);
+        forestShrine.setExit("east", forest);
 
         tent.setExit("north", templeOfTime);
         tent.setExit("west", outsideShrineOfResurrection);
-        tent.setExit("south",mountHylia);
+        tent.setExit("south", mountHylia);
 
-        mountHylia.setExit("south",riverOfTheDead);
+        mountHylia.setExit("south", riverOfTheDead);
         mountHylia.setExit("north", tent);
 
-        riverOfTheDead.setExit("north",mountHylia);
+        riverOfTheDead.setExit("north", mountHylia);
 
-        templeOfTime.setExit("south",tent);
-        templeOfTime.setExit("east",easternAbbey);
+        templeOfTime.setExit("south", tent);
+        templeOfTime.setExit("east", easternAbbey);
 
         easternAbbey.setExit("west", templeOfTime);
 
+        oldMan = new Friend("oldMan", tent);
+        tent.setCharacters(oldMan);
+        wolf = new Foe("wolf", forest, 50);
+        forest.setCharacters(wolf);
+        zelda = new Friend("zelda", shrineOfResurrection);
+        shrineOfResurrection.setCharacters(zelda);
 
         // create the player character and start outside
-        if (file.exists()){
+        if (file.exists()) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("player.ser"))) {
                 player = (Character) in.readObject();
                 System.out.println("Object has been deserialized:");
-                } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-        else {
-            player = new Character("player", shrineOfResurrection,100);
-            oldMan = new Friend("oldMan",tent);
-            wolf = new Foe("wolf",forest, 50);
-            zelda = new Friend("zelda", shrineOfResurrection);
+        } else {
+            player = new Character("player", shrineOfResurrection, 100);
+
+
 
 
             allFriends.put("oldMan", oldMan);
             allFoes.put("wolf", wolf);
-            allFriends.put("zelda",zelda);
+            allFriends.put("zelda", zelda);
 
             oldMan.friendInventory.addTo(allItems.get("shirt"));
             shrineOfResurrection.roomInventory.addTo(allItems.get("torch"));
-            shrineOfResurrection.setCharacters(zelda);
+
             forest.roomInventory.addTo(allItems.get("memory1"));
-            forest.setCharacters(wolf);
+
             bokoblinCamp.roomInventory.addTo(allItems.get("trousers"));
             forestShrine.roomInventory.addTo(allItems.get("shoes"));
-            tent.setCharacters(oldMan);
-           // tent.roomInventory.addTo(allItems.get("shirt"));
+
+            // tent.roomInventory.addTo(allItems.get("shirt"));
             tent.roomInventory.addTo(allItems.get("apple"));
             templeOfTime.roomInventory.addTo(allItems.get("memory2"));
             easternAbbey.roomInventory.addTo(allItems.get("sword"));
@@ -141,29 +145,27 @@ public class ChunderOfTheWild {
         }
 
 
-
-
     }
 
-    private void createItems(){
-        Item torch,shirt,shoes,trousers,sword,apple, memory1, memory2, memory3, memory4;
+    private void createItems() {
+        Item torch, shirt, shoes, trousers, sword, apple, memory1, memory2, memory3, memory4;
 
         torch = new Item("torch", "Illuminates and wards off the dark");
         shirt = new Item("shirt", "Keeps you warm and honest");
-        shoes = new Item("shoes","protect your feet from environmental hazards");
+        shoes = new Item("shoes", "protect your feet from environmental hazards");
         trousers = new Item("trousers", "covers your calves and shins");
-        sword = new Item("sword","The Swords mighty glow inspires you");
-        apple = new Item("apple","a red apple");
-        memory1 = new Item("memory","N/A");
-        memory2 = new Item("memory2","N/A");
-        memory3 = new Item("memory3","N/A");
-        memory4 = new Item("memory4","N/A");
+        sword = new Item("sword", "Your sword stands cleanly upright in the middle of vomit");
+        apple = new Item("apple", "a red apple glistens on the ground, waiting to be eaten", 10);
+        memory1 = new Item("memory", "N/A");
+        memory2 = new Item("memory2", "N/A");
+        memory3 = new Item("memory3", "N/A");
+        memory4 = new Item("memory4", "N/A");
         allItems.put("torch", torch);
-        allItems.put("shirt",shirt);
-        allItems.put("shoes",shoes);
-        allItems.put("trousers",trousers);
-        allItems.put("sword",sword);
-        allItems.put("apple",apple);
+        allItems.put("shirt", shirt);
+        allItems.put("shoes", shoes);
+        allItems.put("trousers", trousers);
+        allItems.put("sword", sword);
+        allItems.put("apple", apple);
         allItems.put("memory1", memory1);
         allItems.put("memory2", memory2);
         allItems.put("memory3", memory3);
@@ -183,7 +185,50 @@ public class ChunderOfTheWild {
 
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to The Legend Of The Hangover: Chunder Of The Wild!");
+        System.out.println("\n" +
+                "\n" +
+                "██╗    ██╗███████╗██╗      ██████╗ ██████╗ ███╗   ███╗███████╗                 \n" +
+                "██║    ██║██╔════╝██║     ██╔════╝██╔═══██╗████╗ ████║██╔════╝                 \n" +
+                "██║ █╗ ██║█████╗  ██║     ██║     ██║   ██║██╔████╔██║█████╗                   \n" +
+                "██║███╗██║██╔══╝  ██║     ██║     ██║   ██║██║╚██╔╝██║██╔══╝                   \n" +
+                "╚███╔███╔╝███████╗███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║███████╗                 \n" +
+                " ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝                 \n" +
+                "                                                                               \n" +
+                "████████╗ ██████╗     ██╗     ███████╗ ██████╗ ███████╗███╗   ██╗██████╗       \n" +
+                "╚══██╔══╝██╔═══██╗    ██║     ██╔════╝██╔════╝ ██╔════╝████╗  ██║██╔══██╗      \n" +
+                "   ██║   ██║   ██║    ██║     █████╗  ██║  ███╗█████╗  ██╔██╗ ██║██║  ██║      \n" +
+                "   ██║   ██║   ██║    ██║     ██╔══╝  ██║   ██║██╔══╝  ██║╚██╗██║██║  ██║      \n" +
+                "   ██║   ╚██████╔╝    ███████╗███████╗╚██████╔╝███████╗██║ ╚████║██████╔╝      \n" +
+                "   ╚═╝    ╚═════╝     ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═════╝       \n" +
+                "                                                                               \n" +
+                " ██████╗ ███████╗    ████████╗██╗  ██╗███████╗                                 \n" +
+                "██╔═══██╗██╔════╝    ╚══██╔══╝██║  ██║██╔════╝                                 \n" +
+                "██║   ██║█████╗         ██║   ███████║█████╗                                   \n" +
+                "██║   ██║██╔══╝         ██║   ██╔══██║██╔══╝                                   \n" +
+                "╚██████╔╝██║            ██║   ██║  ██║███████╗                                 \n" +
+                " ╚═════╝ ╚═╝            ╚═╝   ╚═╝  ╚═╝╚══════╝                                 \n" +
+                "                                                                               \n" +
+                "██╗  ██╗ █████╗ ███╗   ██╗ ██████╗  ██████╗ ██╗   ██╗███████╗██████╗           \n" +
+                "██║  ██║██╔══██╗████╗  ██║██╔════╝ ██╔═══██╗██║   ██║██╔════╝██╔══██╗██╗       \n" +
+                "███████║███████║██╔██╗ ██║██║  ███╗██║   ██║██║   ██║█████╗  ██████╔╝╚═╝       \n" +
+                "██╔══██║██╔══██║██║╚██╗██║██║   ██║██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██╗       \n" +
+                "██║  ██║██║  ██║██║ ╚████║╚██████╔╝╚██████╔╝ ╚████╔╝ ███████╗██║  ██║╚═╝       \n" +
+                "╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝          \n" +
+                "                                                                               \n" +
+                " ██████╗██╗  ██╗██╗   ██╗███╗   ██╗██████╗ ███████╗██████╗                     \n" +
+                "██╔════╝██║  ██║██║   ██║████╗  ██║██╔══██╗██╔════╝██╔══██╗                    \n" +
+                "██║     ███████║██║   ██║██╔██╗ ██║██║  ██║█████╗  ██████╔╝                    \n" +
+                "██║     ██╔══██║██║   ██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗                    \n" +
+                "╚██████╗██║  ██║╚██████╔╝██║ ╚████║██████╔╝███████╗██║  ██║                    \n" +
+                " ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝                    \n" +
+                "                                                                               \n" +
+                " ██████╗ ███████╗    ████████╗██╗  ██╗███████╗    ██╗    ██╗██╗██╗     ██████╗ \n" +
+                "██╔═══██╗██╔════╝    ╚══██╔══╝██║  ██║██╔════╝    ██║    ██║██║██║     ██╔══██╗\n" +
+                "██║   ██║█████╗         ██║   ███████║█████╗      ██║ █╗ ██║██║██║     ██║  ██║\n" +
+                "██║   ██║██╔══╝         ██║   ██╔══██║██╔══╝      ██║███╗██║██║██║     ██║  ██║\n" +
+                "╚██████╔╝██║            ██║   ██║  ██║███████╗    ╚███╔███╔╝██║███████╗██████╔╝\n" +
+                " ╚═════╝ ╚═╝            ╚═╝   ╚═╝  ╚═╝╚══════╝     ╚══╝╚══╝ ╚═╝╚══════╝╚═════╝ \n" +
+                "\n");
         System.out.println("You are playing as Link. The evil Ganon has been defeated. Now however you must fight against something much worse.");
         System.out.println("Celebrations took place last night and you are extremely hungover.");
         System.out.println("You must piece together the events of last night while gathering your clothing from around the Great Plateau.");
@@ -195,7 +240,7 @@ public class ChunderOfTheWild {
     }
 
     private boolean processCommand(Command command) {
-        String commandWord = command.getCommandWord();
+        Commands commandWord = command.getCommandWord();
 
         if (commandWord == null) {
             System.out.println("I don't understand your command...");
@@ -203,41 +248,41 @@ public class ChunderOfTheWild {
         }
 
         switch (commandWord) {
-            case "help":
+            case help:
                 printHelp();
                 break;
-            case "go":
+            case go:
                 goRoom(command);
                 break;
-            case "quit":
+            case quit:
                 if (command.hasSecondWord()) {
                     System.out.println("Quit what?");
                     return false;
                 } else {
-                return true; // signal to quit
+                    return true; // signal to quit
                 }
-            case "teleport":
+            case teleport:
                 teleport(command);
                 break;
-            case "look":
+            case look:
                 look(command);
                 break;
-            case "take":
+            case take:
                 take(command);
                 break;
-            case "inventory":
+            case inventory:
                 inventory(command);
                 break;
-            case ("drop"):
+            case drop:
                 drop(command);
                 break;
-            case ("save"):
+            case save:
                 savePlayer();
                 break;
-            case("talkto"):
+            case talkto:
                 talkto(command);
                 break;
-            case("fight"):
+            case fight:
                 fight(command);
                 break;
             default:
@@ -264,10 +309,18 @@ public class ChunderOfTheWild {
         Room nextRoom = player.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is nothing in this direction!");
         } else {
-            player.setCurrentRoom(nextRoom);
-            System.out.println(player.getCurrentRoom().getLongDescription());
+            if (((player.getCurrentRoom() == allRooms.get("forest")) && (player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))))&& (nextRoom == allRooms.get("forestShrine"))) {
+                System.out.println("The wolf snarls as it stands inbetween you and the west");
+            }
+            else if (((player.getCurrentRoom() == allRooms.get("mountHylia"))&&(!player.getInventory().getInventories().contains(allItems.get("shoes"))))&& (nextRoom == allRooms.get("riverOfTheDead"))){
+                System.out.println("The ice is fair cold");
+            }
+            else {
+                player.setCurrentRoom(nextRoom);
+                System.out.println(player.getCurrentRoom().getLongDescription());
+            }
         }
     }
 
@@ -290,11 +343,16 @@ public class ChunderOfTheWild {
     private void look(Command command){
         if (!command.hasSecondWord()) {
             player.getCurrentRoom().getItems();
+            //System.out.println((player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))));
+           // System.out.println((player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))));
+           // System.out.println(!player.getInventory().getInventories().contains(allItems.get("shoes")));
+            //System.out.println(player.getCurrentRoom() == allRooms.get("mountHylia"));
+            //System.out.println((player.getCurrentRoom() == allRooms.get("mountHylia"))&&(!player.getInventory().getInventories().contains(allItems.get("shoes"))));
             if ((player.getCurrentRoom() == allRooms.get("tent")) || (player.getCurrentRoom() == allRooms.get("shrineOfResurrection"))){
                 player.getCurrentRoom().getFriendCharacters();
             }
             else if ((player.getCurrentRoom() ==  allRooms.get("forest"))){
-                player.getCurrentRoom().getFoeCharacters();
+                player.getCurrentRoom().showFoeCharacters();
             }
 
         }
@@ -346,13 +404,13 @@ public class ChunderOfTheWild {
 
             try {
                 System.out.println(allFriends.get(npc).getFriendName() + ": I have your shirt");
-                //System.out.println(allFriends.get(npc).getFriendInventory() );
+                allFriends.get(npc).getFriendInventory();
             } catch (Exception e) {
                 System.out.print("");
             }
 
         }
-        if (player.getCurrentRoom() == allRooms.get("shrineOfResurrection")){
+        else if (player.getCurrentRoom() == allRooms.get("shrineOfResurrection")){
             try {
                 System.out.println(allFriends.get(npc).getFriendName()+": You better have a good excuse for what happened last night. Where are your clothes??");
             } catch (Exception e) {
@@ -374,29 +432,73 @@ public class ChunderOfTheWild {
         if (allFoes.containsKey(command.getSecondWord())) {
             if (player.getCurrentRoom() == allRooms.get("forest")) {
                 Scanner input = new Scanner(System.in);
-                while ((player.getHealth() > 0) && (allFoes.get(command.getSecondWord()).getHealth() > 0)) {
+                Boolean engaged = true;
+                while (((player.getHealth() > 0) && (allFoes.get(command.getSecondWord()).getHealth() > 0)) && (engaged)) {
                     System.out.println("Player Health: " + player.getHealth());
                     System.out.println("Wolf Health: " + allFoes.get(command.getSecondWord()).getHealth());
                     System.out.println("What would you like to do?: \nAttack[1] \nEat[2] \nRun Away[3]\n");
                     int fightChoice = 0;
                     try {
-                        fightChoice = input.nextInt();
+                        fightChoice = (input.nextInt());
                     } catch (Exception e) {
                         System.out.println("Please enter a valid number.");
                         continue;
                     }
+                    int wolfDamage = (int)((Math.random() * 20)+ 5);
+                    System.out.println("The wolf lunges at you! It bites you and deals " +wolfDamage + " damage!");
+                    player.reduceHealth(wolfDamage);
                     switch (fightChoice) {
                         case (1):
-                            allFoes.get(command.getSecondWord()).reduceHealth();
+                            if (player.getInventory().getInventories().contains(allItems.get("sword"))){
+                            allFoes.get(command.getSecondWord()).reduceHealth(25);
+                            }
+                            else {
+                                allFoes.get(command.getSecondWord()).reduceHealth(5);
+                            }
+
                             if (allFoes.get(command.getSecondWord()).getHealth() < 0) {
+                                System.out.println("The wolf is dead, you may now continue to the west.");
                                 player.getCurrentRoom().removeCharacter(allFoes.get(command.getSecondWord()));
                             }
-                            break;
+                            if (player.getHealth() <0){
+                                System.out.println("The wolf ravaged you into bits. \n \n \n \n" +
+                                        "\n" +
+                                        "/========================================================\\\n" +
+                                        "||   ▄██████▄     ▄████████   ▄▄▄▄███▄▄▄▄      ▄████████||\n" +
+                                        "||  ███    ███   ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███||\n" +
+                                        "||  ███    █▀    ███    ███ ███   ███   ███   ███    █▀ ||\n" +
+                                        "|| ▄███          ███    ███ ███   ███   ███  ▄███▄▄▄    ||\n" +
+                                        "||▀▀███ ████▄  ▀███████████ ███   ███   ███ ▀▀███▀▀▀    ||\n" +
+                                        "||  ███    ███   ███    ███ ███   ███   ███   ███    █▄ ||\n" +
+                                        "||  ███    ███   ███    ███ ███   ███   ███   ███    ███||\n" +
+                                        "||  ████████▀    ███    █▀   ▀█   ███   █▀    ██████████||\n" +
+                                        "||                                                      ||\n" +
+                                        "|| ▄██████▄   ▄█    █▄     ▄████████    ▄████████       ||\n" +
+                                        "||███    ███ ███    ███   ███    ███   ███    ███       ||\n" +
+                                        "||███    ███ ███    ███   ███    █▀    ███    ███       ||\n" +
+                                        "||███    ███ ███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀       ||\n" +
+                                        "||███    ███ ███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀         ||\n" +
+                                        "||███    ███ ███    ███   ███    █▄  ▀███████████       ||\n" +
+                                        "||███    ███ ███    ███   ███    ███   ███    ███       ||\n" +
+                                        "|| ▀██████▀   ▀██████▀    ██████████   ███    ███       ||\n" +
+                                        "||                                     ███    ███       ||\n" +
+                                        "\\========================================================/\n" +
+                                        "\n");
+                            }
+                            continue;
                         case (2):
-                            break;
+                            if (player.getInventory().getInventories().contains(allItems.get("apple"))) {
+                                player.increaseHealth(allItems.get("apple").getHealingValue());
+                                player.getInventory().getInventories().remove(allItems.get("apple"));
+                            }
+                            else{
+                                System.out.println("No consumables in your inventory. ");
+                            }
+                            continue;
                         case (3):
                             System.out.println("You successfully ran away from the Wolf");
-                            break;
+                            engaged = false;
+                            continue;
                         default:
                             System.out.println("Something went wrong, please try again");
                             continue;

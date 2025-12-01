@@ -1,23 +1,24 @@
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandWords {
-    private Map<String, String> validCommands;
+     Map<String, Commands> validCommands;
 
     public CommandWords() {
         validCommands = new HashMap<>();
-        validCommands.put("go", "Move to another room");
-        validCommands.put("quit", "End the game");
-        validCommands.put("help", "Show help");
-        validCommands.put("look", "Look around");
-        validCommands.put("eat", "Eat something");
-        validCommands.put("teleport", "Teleport to another room");
-        validCommands.put("take", "Takes an object from a room into your inventory");
-        validCommands.put("drop", "Drops an object from your inventory into a room");
-        validCommands.put("inventory", "Opens up the player's inventory");
-        validCommands.put("save", "Saves the game");
-        validCommands.put("talkto", "Talks with an NPC");
-        validCommands.put("fight", "Fights with an NPC");
+        validCommands.put("go",Commands.go);
+        validCommands.put("quit",Commands.quit);
+        validCommands.put("help",Commands.help);
+        validCommands.put("look",Commands.look);
+        validCommands.put("eat",Commands.eat);
+        validCommands.put("teleport",Commands.teleport);
+        validCommands.put("take",Commands.take);
+        validCommands.put("drop",Commands.drop);
+        validCommands.put("inventory",Commands.inventory);
+        validCommands.put("save",Commands.save);
+        validCommands.put("talkto",Commands.talkto);
+        validCommands.put("fight",Commands.fight);
     }
 
     public boolean isCommand(String commandWord) {
@@ -25,10 +26,12 @@ public class CommandWords {
     }
 
     public void showAll() {
-        System.out.print("Valid commands are: ");
-        for (String command : validCommands.keySet()) {
-            System.out.print(command + " ");
-        }
-        System.out.println();
+        System.out.print("Valid commands are: " + validCommands.keySet());
+
+        /*
+        for (int x = 0; x< validCommands.size(); x++){
+            System.out.println(validCommands);
+        }*/
     }
+    public Commands getCommands(String x){return validCommands.get(x);}
 }

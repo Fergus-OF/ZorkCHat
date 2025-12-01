@@ -13,8 +13,8 @@ public class Foe extends Character implements Serializable{
     }
     public String getFoeName(){ return foeName;}
 
-    public void reduceHealth(){
-        int attackValue = (int)(Math.random()*20);
+    public void reduceHealth(int attackMultiplier){
+        int attackValue = (int)((Math.random() * attackMultiplier));
         int newHealth = getHealth()- attackValue;
         System.out.println("The wolf has: "+ health+" health");
         System.out.println("You swing bravely at the wolf and deal "+ attackValue + " damage");

@@ -35,19 +35,25 @@ public class Character implements Serializable {
     public void setFoeDamage(int damage ) {
        // Foe.setHealth((damage));
     }
-    public void reduceHealth(){
-        int attackValue = (int)(Math.random()*20);
-        int newHealth = getHealth()- attackValue;
-        System.out.println("Wolf Health: "+ health);
-        System.out.println("AttackValue: "+ attackValue);
+    public void reduceHealth(int attackMultiplier){
+        int attackValue = (int)(Math.random() * attackMultiplier);
+        int newHealth = getHealth()- attackMultiplier;
+        //System.out.println("Wolf Health: "+ health);
+        //System.out.println("AttackValue: "+ attackValue);
 
         setHealth(newHealth);
-        System.out.println("New Health" + health);
+        //System.out.println("New Health" + health);
     }
 
     public void setHealth(int newHealth){
         this.health =  newHealth;
-        //return health;
+    }
+
+    public void increaseHealth(int healValue){
+        System.out.println("Heal Value: "+ healValue);
+        int newHealth = health + healValue;
+        setHealth(newHealth);
+        //System.out.println("New Health" + health);
     }
 
     public int getHealth(){ return health; }
@@ -63,6 +69,8 @@ public class Character implements Serializable {
     public void showInventory(){
         playerInventory.showItems();
     }
+
+    public Inventory getInventory(){ return playerInventory;}
 
     public void takeItem(Item item){
        playerInventory.addTo(item);

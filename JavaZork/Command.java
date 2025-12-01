@@ -1,13 +1,13 @@
 public class Command {
-    private String commandWord;
+    private Commands commandWord;
     private String secondWord;
 
-    public Command(String firstWord, String secondWord) {
+    public Command(Commands firstWord, String secondWord) {
         this.commandWord = firstWord;
         this.secondWord = secondWord;
     }
 
-    public String getCommandWord() {
+    public Commands getCommandWord() {
         return commandWord;
     }
 

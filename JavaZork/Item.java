@@ -6,6 +6,7 @@ public class Item  implements Serializable {
     private String location;
     private int id;
     private boolean isVisible;
+    private int healingValue;
 
     public Item(String name, String description) {
         this.name = name;
@@ -13,9 +14,18 @@ public class Item  implements Serializable {
         this.isVisible = true;
     }
 
+    public Item(String name, String description, int healingValue) {
+        this.name = name;
+        this.description = description;
+        this.isVisible = true;
+        this.healingValue = healingValue;
+    }
+
     public String getDescription() {
         return description;
     }
+
+    public int getHealingValue(){ return healingValue;}
 
     public void setDescription(String description) {
         this.description = description;
