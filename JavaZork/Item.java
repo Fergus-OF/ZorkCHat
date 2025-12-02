@@ -1,7 +1,10 @@
 import java.io.Serializable;
 
-public class Item  implements Serializable {
-    private String description;
+public interface Item {
+    String description();
+    String name();
+}
+   /* private String description;
     private String name;
     private String location;
     private int id;
@@ -63,3 +66,5 @@ public class Item  implements Serializable {
         isVisible = visible;
     }
 }
+
+    */

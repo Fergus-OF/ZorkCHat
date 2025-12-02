@@ -26,6 +26,10 @@ public class ChunderOfTheWild {
     private HashMap<String, Item> allItems = new HashMap<>();
     private HashMap<String, Friend> allFriends = new HashMap<>();
     private HashMap<String, Foe> allFoes = new HashMap<>();
+    private TreasureChest<Memories> memoriesChest;
+    private TreasureChest<Clothes> clothesChest;
+    private TreasureChest<Food> foodChest;
+    private TreasureChest<ItemUsable> itemChest;
     File file = new File("game.ser");
     private Friend oldMan;
     private Foe wolf;
@@ -150,16 +154,16 @@ public class ChunderOfTheWild {
     private void createItems() {
         Item torch, shirt, shoes, trousers, sword, apple, memory1, memory2, memory3, memory4;
 
-        torch = new Item("torch", "Illuminates and wards off the dark");
-        shirt = new Item("shirt", "Keeps you warm and honest");
-        shoes = new Item("shoes", "protect your feet from environmental hazards");
-        trousers = new Item("trousers", "covers your calves and shins");
-        sword = new Item("sword", "Your sword stands cleanly upright in the middle of vomit");
-        apple = new Item("apple", "a red apple glistens on the ground, waiting to be eaten", 10);
-        memory1 = new Item("memory", "N/A");
-        memory2 = new Item("memory2", "N/A");
-        memory3 = new Item("memory3", "N/A");
-        memory4 = new Item("memory4", "N/A");
+        torch = new ItemUsable("torch", "Illuminates and wards off the dark");
+        shirt = new Clothes("shirt", "Keeps you warm and modest");
+        shoes = new Clothes("shoes", "protect your feet from environmental hazards");
+        trousers = new Clothes("trousers", "covers your calves and shins");
+        sword = new ItemUsable("sword", "Your sword stands cleanly upright in the middle of vomit");
+        apple = new Food("apple", "a red apple glistens on the ground, waiting to be eaten", 10);
+        memory1 = new Memories("memory", "N/A");
+        memory2 = new Memories("memory2", "N/A");
+        memory3 = new Memories("memory3", "N/A");
+        memory4 = new Memories("memory4", "N/A");
         allItems.put("torch", torch);
         allItems.put("shirt", shirt);
         allItems.put("shoes", shoes);
@@ -285,6 +289,9 @@ public class ChunderOfTheWild {
             case fight:
                 fight(command);
                 break;
+            case open:
+                open(command);
+                break;
             default:
                 System.out.println("I don't know what you mean...");
                 break;
@@ -403,10 +410,11 @@ public class ChunderOfTheWild {
         if (player.getCurrentRoom() == allRooms.get("tent")){
 
             try {
+                System.out.println(allFriends);
                 System.out.println(allFriends.get(npc).getFriendName() + ": I have your shirt");
                 allFriends.get(npc).getFriendInventory();
             } catch (Exception e) {
-                System.out.print("");
+                System.out.print("Something went wrong. Please try again");
             }
 
         }
@@ -488,7 +496,7 @@ public class ChunderOfTheWild {
                             continue;
                         case (2):
                             if (player.getInventory().getInventories().contains(allItems.get("apple"))) {
-                                player.increaseHealth(allItems.get("apple").getHealingValue());
+                                //player.increaseHealth(allItems.get("apple").getHealingValue());
                                 player.getInventory().getInventories().remove(allItems.get("apple"));
                             }
                             else{
@@ -510,6 +518,11 @@ public class ChunderOfTheWild {
         else {
 
         }
+    }
+
+
+    private void open(Command command){
+
     }
 
     public static void main(String[] args) {

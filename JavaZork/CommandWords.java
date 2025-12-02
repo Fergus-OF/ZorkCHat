@@ -19,6 +19,7 @@ public class CommandWords {
         validCommands.put("save",Commands.save);
         validCommands.put("talkto",Commands.talkto);
         validCommands.put("fight",Commands.fight);
+        validCommands.put("open", Commands.open);
     }
 
     public boolean isCommand(String commandWord) {

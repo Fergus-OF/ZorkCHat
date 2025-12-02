@@ -10,5 +10,6 @@ public enum Commands {
     inventory,
     save,
     talkto,
-    fight;
+    fight,
+    open,
 }

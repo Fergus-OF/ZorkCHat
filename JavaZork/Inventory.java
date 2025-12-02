@@ -1,7 +1,29 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventory implements Serializable {
+public class Inventory<T> implements Serializable {
+    private ArrayList<T> items = new ArrayList<>();
+
+    public void add(T item) {
+        items.add(item);
+    }
+
+    public void remove(T item) {
+        items.remove(item);
+    }
+
+    public ArrayList<T> getAll() {
+        return items;
+    }
+
+    public void showAll() {
+        for (T item : items) {
+            System.out.println(item.toString());
+        }
+    }
+}
+
+    /*
     ArrayList<Item> inventory = new ArrayList<>();
     ArrayList<Friend> friends = new ArrayList<>();
     ArrayList<Foe> foes = new ArrayList<>();
@@ -40,7 +62,7 @@ public class Inventory implements Serializable {
 
     public void showItems(){
         for(Item item: inventory) {
-            System.out.println("A " +item.getName() + " " + item.getDescription());
+            System.out.println("A " +item.name() + " " + item.description());
         }
     }
 
@@ -53,5 +75,7 @@ public class Inventory implements Serializable {
     }
 
 
-    }
+
+
+     */
 

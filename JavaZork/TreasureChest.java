@@ -4,7 +4,7 @@ public class TreasureChest<T extends Item> {
     public TreasureChest(T value){
         this.value = value;
     }
-    public void describe(){
+    public void getName(){
         System.out.println("This chest contains: " + value);
     }
 }
