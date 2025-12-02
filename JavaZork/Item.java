@@ -3,6 +3,7 @@ import java.io.Serializable;
 public interface Item {
     String description();
     String name();
+    int getHealingValue();
 }
    /* private String description;
     private String name;

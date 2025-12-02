@@ -15,15 +15,15 @@ public class Friend extends Character implements Serializable {
 
 
     public void getFriendInventory(){
-        friendInventory.showItems();
+        friendInventory.showAll();
     }
 
     public void friendSetItem(Item item){
-        friendInventory.addTo(item);
+        friendInventory.add(item);
     }
 
     public void friendRemoveItem(Item item){
-        friendInventory.removeFrom(item);
+        friendInventory.remove(item);
     }
 
 

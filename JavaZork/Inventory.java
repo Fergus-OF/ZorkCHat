@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventory<T> implements Serializable {
+public class Inventory<T extends Item> implements Serializable {
     private ArrayList<T> items = new ArrayList<>();
 
     public void add(T item) {
@@ -18,9 +18,11 @@ public class Inventory<T> implements Serializable {
 
     public void showAll() {
         for (T item : items) {
-            System.out.println(item.toString());
+            System.out.println("A "+item.name()+ " " + item.description());
         }
     }
+
+
 }
 
     /*

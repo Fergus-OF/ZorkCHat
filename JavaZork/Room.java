@@ -6,21 +6,26 @@ import java.util.ArrayList;
 public class Room implements Serializable {
     private String description;
     private Map<String, Room> exits; // Map direction to neighboring Room
-    public Inventory roomInventory;
-    public Inventory characters;
+    public Inventory<Item> roomInventory;
+    public CharInventory characters;
+    public String name;
 
-    public Room(String description) {
+    public Room(String name, String description) {
+        this.name = name;
         this.description = description;
         exits = new HashMap<>();
         this.roomInventory = new Inventory();
     }
 
-    public Room(String description, Character characters){
+    public Room(String name, String description, Character characters){
+        this.name = name;
         this.description = description;
         exits = new HashMap<>();
         this.roomInventory = new Inventory();
-        this.characters = new Inventory();
+        this.characters = new CharInventory();
     }
+
+    public String getName() { return name;}
 
     public String getDescription() {
         return description;
@@ -34,13 +39,13 @@ public class Room implements Serializable {
         return exits.get(direction);
     }
 
-    public ArrayList getInventory(){ return roomInventory.getInventories(); }
+    public ArrayList getInventory(){ return roomInventory.getAll(); }
 
     public void setCharacters(Friend fella){characters.setCharacter(fella);}
 
     public void setCharacters(Foe enemy){characters.setCharacter(enemy);}
 
-    public void removeCharacter(Foe enemy){characters.removeCharacter(enemy);}
+    public void removeCharacter(Character enemy){characters.removeCharacter(enemy);}
 
     public void getFriendCharacters(){ characters.getFriendCharacter() ; }
 
@@ -48,11 +53,11 @@ public class Room implements Serializable {
 
     public void showFoeCharacters(){characters.showFoeCharacter();}
 
-    public void getItems(){  roomInventory.showItems();}
+    public void getItems(){  roomInventory.showAll();}
 
-    public void takeItem(Item item){ roomInventory.removeFrom(item);}
+    public void takeItem(Item item){ roomInventory.remove(item);}
 
-    public void dropItem(Item item){ roomInventory.addTo(item);}
+    public void dropItem(Item item){ roomInventory.add(item);}
 
 
     public String getExitString() {

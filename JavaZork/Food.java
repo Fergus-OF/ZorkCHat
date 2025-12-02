@@ -21,6 +21,6 @@ public class Food implements Item, Serializable{
         return description;
     }
 
-    //@Override
-    //public int getHealingValue(){ return healingValue;}
+    @Override
+    public int getHealingValue(){ return healingValue;}
 }

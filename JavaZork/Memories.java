@@ -18,5 +18,8 @@ public class Memories implements Item, Serializable {
     public String description(){
         return description;
     }
+
+    @Override
+    public int getHealingValue(){ return 0;}
 }
 

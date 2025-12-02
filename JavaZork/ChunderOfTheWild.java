@@ -26,10 +26,6 @@ public class ChunderOfTheWild {
     private HashMap<String, Item> allItems = new HashMap<>();
     private HashMap<String, Friend> allFriends = new HashMap<>();
     private HashMap<String, Foe> allFoes = new HashMap<>();
-    private TreasureChest<Memories> memoriesChest;
-    private TreasureChest<Clothes> clothesChest;
-    private TreasureChest<Food> foodChest;
-    private TreasureChest<ItemUsable> itemChest;
     File file = new File("game.ser");
     private Friend oldMan;
     private Foe wolf;
@@ -55,28 +51,28 @@ public class ChunderOfTheWild {
         Room shrineOfResurrection, outsideShrineOfResurrection, forestShrine, bokoblinCamp, forest, tent, templeOfTime, easternAbbey, mountHylia, riverOfTheDead;
 
         // create rooms
-        shrineOfResurrection = new Room("in Shrine of Resurrection", zelda);
-        outsideShrineOfResurrection = new Room("Outside the Shrine of Resurrection");
-        forestShrine = new Room("in the Shrine in the Forest of Spirits");
-        bokoblinCamp = new Room("in an Old Bokoblin Camp");
-        forest = new Room("in the Forest of Spirits", wolf);
-        tent = new Room("Standing infront of a tent", oldMan);
-        templeOfTime = new Room("in the Temple of Time");
-        easternAbbey = new Room("in the Eastern Abbey");
-        mountHylia = new Room("Standing on the peak of Mount Hylia");
-        riverOfTheDead = new Room("Standing on the frozen surface of The River Of The Dead");
+        shrineOfResurrection = new Room("Shrine of Resurrection","in Shrine of Resurrection", zelda);
+        outsideShrineOfResurrection = new Room("Outside the Shrine of Resurrection","Outside the Shrine of Resurrection");
+        forestShrine = new Room("Shrine in the forest of Spirits","in the Shrine in the Forest of Spirits");
+        bokoblinCamp = new Room("Bokoblin Camp","in an Old Bokoblin Camp");
+        forest = new Room("Forest of Spirits","in the Forest of Spirits", wolf);
+        tent = new Room("tent","Standing infront of a tent", oldMan);
+        templeOfTime = new Room("Temple of Time","in the Temple of Time");
+        easternAbbey = new Room("Eastern Abbey","in the Eastern Abbey");
+        mountHylia = new Room("Mount Hylia","Standing on the peak of Mount Hylia");
+        riverOfTheDead = new Room("River of the Dead","Standing on the frozen surface of The River Of The Dead");
 
 
-        allRooms.put("shrineOfResurrection", shrineOfResurrection);
+        allRooms.put("shrineofresurrection", shrineOfResurrection);
         allRooms.put("outside", outsideShrineOfResurrection);
-        allRooms.put("forestShrine", forestShrine);
-        allRooms.put("bokoblinCamp", bokoblinCamp);
+        allRooms.put("forestshrine", forestShrine);
+        allRooms.put("bokoblincamp", bokoblinCamp);
         allRooms.put("forest", forest);
         allRooms.put("tent", tent);
-        allRooms.put("templeOfTime", templeOfTime);
-        allRooms.put("easternAbbey", easternAbbey);
-        allRooms.put("mountHylia", mountHylia);
-        allRooms.put("riverOfTheDead", riverOfTheDead);
+        allRooms.put("templeOftime", templeOfTime);
+        allRooms.put("easternabbey", easternAbbey);
+        allRooms.put("mounthylia", mountHylia);
+        allRooms.put("riverofthedead", riverOfTheDead);
 
         // initialise room exits
         shrineOfResurrection.setExit("north", outsideShrineOfResurrection);
@@ -128,24 +124,24 @@ public class ChunderOfTheWild {
 
 
 
-            allFriends.put("oldMan", oldMan);
+            allFriends.put("oldman", oldMan);
             allFoes.put("wolf", wolf);
             allFriends.put("zelda", zelda);
 
-            oldMan.friendInventory.addTo(allItems.get("shirt"));
-            shrineOfResurrection.roomInventory.addTo(allItems.get("torch"));
+            oldMan.friendInventory.add(allItems.get("shirt"));
+            shrineOfResurrection.roomInventory.add(allItems.get("torch"));
 
-            forest.roomInventory.addTo(allItems.get("memory1"));
+            forest.roomInventory.add(allItems.get("memory1"));
 
-            bokoblinCamp.roomInventory.addTo(allItems.get("trousers"));
-            forestShrine.roomInventory.addTo(allItems.get("shoes"));
+            bokoblinCamp.roomInventory.add(allItems.get("trousers"));
+            forestShrine.roomInventory.add(allItems.get("shoes"));
 
-            // tent.roomInventory.addTo(allItems.get("shirt"));
-            tent.roomInventory.addTo(allItems.get("apple"));
-            templeOfTime.roomInventory.addTo(allItems.get("memory2"));
-            easternAbbey.roomInventory.addTo(allItems.get("sword"));
-            mountHylia.roomInventory.addTo(allItems.get("memory3"));
-            riverOfTheDead.roomInventory.addTo(allItems.get("memory4"));
+            // tent.roomInventory.add(allItems.get("shirt"));
+            tent.roomInventory.add(allItems.get("apple"));
+            templeOfTime.roomInventory.add(allItems.get("memory2"));
+            easternAbbey.roomInventory.add(allItems.get("sword"));
+            mountHylia.roomInventory.add(allItems.get("memory3"));
+            riverOfTheDead.roomInventory.add(allItems.get("memory4"));
         }
 
 
@@ -154,16 +150,16 @@ public class ChunderOfTheWild {
     private void createItems() {
         Item torch, shirt, shoes, trousers, sword, apple, memory1, memory2, memory3, memory4;
 
-        torch = new ItemUsable("torch", "Illuminates and wards off the dark");
-        shirt = new Clothes("shirt", "Keeps you warm and modest");
-        shoes = new Clothes("shoes", "protect your feet from environmental hazards");
-        trousers = new Clothes("trousers", "covers your calves and shins");
-        sword = new ItemUsable("sword", "Your sword stands cleanly upright in the middle of vomit");
-        apple = new Food("apple", "a red apple glistens on the ground, waiting to be eaten", 10);
-        memory1 = new Memories("memory", "N/A");
-        memory2 = new Memories("memory2", "N/A");
-        memory3 = new Memories("memory3", "N/A");
-        memory4 = new Memories("memory4", "N/A");
+        torch = new ItemUsable("torch", " lluminates and wards off the dark");
+        shirt = new Clothes("shirt", " keeps you warm and modest. Theres a faint smell of old crusty body odour wafting from it.");
+        shoes = new Clothes("shoes", " pair of shoes hanging off the shrine. They protect your feet from environmental hazards");
+        trousers = new Clothes("trousers", " ");
+        sword = new ItemUsable("sword", " Sword calls to you! Your sword stands cleanly upright in the middle of vomit. ");
+        apple = new Food("apple", " glistens on the ground, waiting to be eaten", 10);
+        memory1 = new Memories("memory1", "Suddenly comes flooding back to you. \n");
+        memory2 = new Memories("memory2", "Suddenly comes flooding back to you.");
+        memory3 = new Memories("memory3", "Suddenly comes flooding back to you.");
+        memory4 = new Memories("memory4", "Suddenly comes flooding back to you.");
         allItems.put("torch", torch);
         allItems.put("shirt", shirt);
         allItems.put("shoes", shoes);
@@ -318,12 +314,13 @@ public class ChunderOfTheWild {
         if (nextRoom == null) {
             System.out.println("There is nothing in this direction!");
         } else {
-            if (((player.getCurrentRoom() == allRooms.get("forest")) && (player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))))&& (nextRoom == allRooms.get("forestShrine"))) {
+            if (((player.getCurrentRoom() == allRooms.get("forest")) && (player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))))&& (nextRoom == allRooms.get("forestshrine"))) {
                 System.out.println("The wolf snarls as it stands inbetween you and the west");
             }
-            else if (((player.getCurrentRoom() == allRooms.get("mountHylia"))&&(!player.getInventory().getInventories().contains(allItems.get("shoes"))))&& (nextRoom == allRooms.get("riverOfTheDead"))){
-                System.out.println("The ice is fair cold");
+            else if (((player.getCurrentRoom() == allRooms.get("mounthylia"))&&(!player.getInventory().getAll().contains(allItems.get("shoes"))))&& (nextRoom == allRooms.get("riverofthedead"))){
+                System.out.println("You walk a few steps forward but quickly realise the ground is too cold. \nYou turn around back to Mount Hylia. Maybe you need something to protect your feet???");
             }
+
             else {
                 player.setCurrentRoom(nextRoom);
                 System.out.println(player.getCurrentRoom().getLongDescription());
@@ -341,6 +338,7 @@ public class ChunderOfTheWild {
 
         String stringTPRoom = command.getSecondWord();
         if(allRooms.containsKey(stringTPRoom)){
+            System.out.println("Running test");
             player.setCurrentRoom(allRooms.get(stringTPRoom));
             System.out.println(player.getCurrentRoom().getLongDescription());
 
@@ -349,16 +347,19 @@ public class ChunderOfTheWild {
 
     private void look(Command command){
         if (!command.hasSecondWord()) {
+            System.out.println("In the " + player.getCurrentRoom().getName() + " you can see..");
             player.getCurrentRoom().getItems();
             //System.out.println((player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))));
            // System.out.println((player.getCurrentRoom().getFoeCharacters().contains(allFoes.get("wolf"))));
            // System.out.println(!player.getInventory().getInventories().contains(allItems.get("shoes")));
             //System.out.println(player.getCurrentRoom() == allRooms.get("mountHylia"));
             //System.out.println((player.getCurrentRoom() == allRooms.get("mountHylia"))&&(!player.getInventory().getInventories().contains(allItems.get("shoes"))));
-            if ((player.getCurrentRoom() == allRooms.get("tent")) || (player.getCurrentRoom() == allRooms.get("shrineOfResurrection"))){
+            if ((player.getCurrentRoom() == allRooms.get("tent")) || (player.getCurrentRoom() == allRooms.get("shrineofresurrection"))){
+                System.out.println("Oh! you look around and there seems to be someone here ");
                 player.getCurrentRoom().getFriendCharacters();
             }
             else if ((player.getCurrentRoom() ==  allRooms.get("forest"))){
+                System.out.println("You are startled to see a wolf in the western direction. It seems to be guarding something.");
                 player.getCurrentRoom().showFoeCharacters();
             }
 
@@ -457,7 +458,7 @@ public class ChunderOfTheWild {
                     player.reduceHealth(wolfDamage);
                     switch (fightChoice) {
                         case (1):
-                            if (player.getInventory().getInventories().contains(allItems.get("sword"))){
+                            if (player.getInventory().getAll().contains(allItems.get("sword"))){
                             allFoes.get(command.getSecondWord()).reduceHealth(25);
                             }
                             else {
@@ -495,9 +496,9 @@ public class ChunderOfTheWild {
                             }
                             continue;
                         case (2):
-                            if (player.getInventory().getInventories().contains(allItems.get("apple"))) {
-                                //player.increaseHealth(allItems.get("apple").getHealingValue());
-                                player.getInventory().getInventories().remove(allItems.get("apple"));
+                            if (player.getInventory().getAll().contains(allItems.get("apple"))) {
+                                player.increaseHealth(allItems.get("apple").getHealingValue());
+                                player.getInventory().getAll().remove(allItems.get("apple"));
                             }
                             else{
                                 System.out.println("No consumables in your inventory. ");
