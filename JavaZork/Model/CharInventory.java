@@ -21,17 +21,23 @@ public class CharInventory {
 
     public void removeCharacter(Character enemy){ foes.remove(enemy);    }
 
-    public void getFriendCharacter() {
-        for (Friend chats: friends) {
-            System.out.println(chats.getFriendName());
+    public String getFriendCharacter() {
+        if (friends.isEmpty()) return "No friends in this room.";
+        StringBuilder sb = new StringBuilder();
+        for (Friend chats : friends) {
+            sb.append(chats.getFriendName()).append("\n");
         }
+        return sb.toString().trim();
     }
 
     public ArrayList getFoeCharacter(){return foes; }
-    public void showFoeCharacter(){
-        for (Foe chats : foes){
-            System.out.println(chats.getFoeName());
+    public String showFoeCharacter() {
+        if (foes.isEmpty()) return "No foes in this room.";
+        StringBuilder sb = new StringBuilder();
+        for (Foe chats : foes) {
+            sb.append(chats.getFoeName()).append("\n");
         }
+        return sb.toString().trim();
     }
 
 

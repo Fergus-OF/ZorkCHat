@@ -27,13 +27,10 @@ public class CommandWords {
         return validCommands.containsKey(commandWord);
     }
 
-    public void showAll() {
-        System.out.print("Valid commands are: " + validCommands.keySet());
+    public String showAll() {
+        return("Valid commands are: " + validCommands.keySet());
 
-        /*
-        for (int x = 0; x< validCommands.size(); x++){
-            System.out.println(validCommands);
-        }*/
+
     }
     public Commands getCommands(String x){return validCommands.get(x);}
 }

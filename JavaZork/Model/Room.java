@@ -49,14 +49,13 @@ public class Room implements Serializable {
 
     public void removeCharacter(Character enemy){characters.removeCharacter(enemy);}
 
-    public void getFriendCharacters(){ characters.getFriendCharacter() ; }
-
+    public String getFriendCharacters() {
+        return characters.getFriendCharacter(); // Assuming CharInventory was converted to return strings
+    }
     public ArrayList getFoeCharacters(){ return characters.getFoeCharacter();}
 
-    public void showFoeCharacters(){characters.showFoeCharacter();}
-
-    public void getItems(){  roomInventory.showAll();}
-
+    public String showFoeCharacters() {return characters.showFoeCharacter();} // Assuming CharInventory returns strings}
+    public String getItems() { return roomInventory.showAll();}
     public void takeItem(Item item){ roomInventory.remove(item);}
 
     public void dropItem(Item item){ roomInventory.add(item);}

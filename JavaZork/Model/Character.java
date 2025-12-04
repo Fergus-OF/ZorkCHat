@@ -28,7 +28,6 @@ public class Character implements Serializable {
 
     public void attack(){
         int attackValue = (int)(Math.random()*20);
-
     }
 
     public void setFoeDamage(int damage ) {
@@ -43,11 +42,10 @@ public class Character implements Serializable {
         this.health =  newHealth;
     }
 
-    public void increaseHealth(int healValue){
-        System.out.println("Heal Value: "+ healValue);
+    public String increaseHealth(int healValue) {
         int newHealth = health + healValue;
         setHealth(newHealth);
-        //System.out.println("New Health" + health);
+        return "Heal Value: " + healValue + "\nNew Health: " + health;
     }
 
     public int getHealth(){ return health; }
@@ -58,10 +56,9 @@ public class Character implements Serializable {
 
     public void setCurrentRoom(Room room) { this.currentRoom = room;}
 
-    public void showInventory(){
-        playerInventory.showAll();
+    public String showInventory() {
+        return playerInventory.showAll();
     }
-
     public Inventory getInventory(){ return playerInventory;}
 
     public void takeItem(Item item){

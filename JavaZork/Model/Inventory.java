@@ -18,10 +18,15 @@ public class Inventory<T extends Item> implements Serializable {
         return items;
     }
 
-    public void showAll() {
-        for (T item : items) {
-            System.out.println("A "+item.name()+ " " + item.description());
+    public String showAll() {
+        if (items.isEmpty()) {
+            return "Your inventory is empty.";
         }
+        StringBuilder sb = new StringBuilder();
+        for (T item : items) {
+            sb.append("A ").append(item.name()).append(" ").append(item.description()).append("\n");
+        }
+        return sb.toString();
     }
 
     public int countMemory(){
