@@ -1,0 +1,17 @@
+package Model;
+
+public enum Commands {
+    go,
+    quit,
+    help,
+    look,
+    eat,
+    teleport,
+    take,
+    drop,
+    inventory,
+    save,
+    talkto,
+    fight,
+    open,
+}
