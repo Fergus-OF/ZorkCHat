@@ -168,6 +168,7 @@ public class ChunderOfTheWild {
         System.out.println("Thank you for playing. Goodbye.");
     }
 
+
     private void printWelcome() {
         System.out.println();
         System.out.println("\n" +
@@ -224,7 +225,13 @@ public class ChunderOfTheWild {
         System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
-    private boolean processCommand(Command command) {
+    public String processCommandString(String input){
+        Command command = parser.getGuiCommand(input);
+        return processCommand(command);
+
+    }
+
+    public boolean processCommand(Command command) {
         Commands commandWord = command.getCommandWord();
 
         if (commandWord == null) {
@@ -284,10 +291,9 @@ public class ChunderOfTheWild {
         parser.showCommands();
     }
 
-    private void goRoom(Command command) {
+    private String goRoom(Command command) {
         if (!command.hasSecondWord()) {
-            System.out.println("Go where?");
-            return;
+            return("Go where?");
         }
 
         String direction = command.getSecondWord();

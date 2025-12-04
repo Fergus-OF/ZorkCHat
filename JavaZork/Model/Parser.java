@@ -56,6 +56,19 @@ public class Parser {
         return new Command(type, word2);
     }
 
+    public Command getGuiCommand(String guiInput){
+
+        System.out.print("> ");
+        String input = guiInput.toLowerCase();
+
+        String[] words = input.split("\\s+");
+
+        String word1 = words.length > 0 ? words[0] : null;
+        String word2 = words.length > 1 ? words[1] : null;
+        Commands type = commands.getCommands(word1);
+        return new Command(type, word2);
+    }
+
     public void showCommands() {
         commands.showAll();
     }
